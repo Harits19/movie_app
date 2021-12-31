@@ -6,6 +6,7 @@ import 'package:majootestcase/models/user.dart';
 import 'package:majootestcase/ui/extra/input_email_view.dart';
 import 'package:majootestcase/ui/extra/input_password_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:majootestcase/utils/function_helper.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -26,20 +27,10 @@ class _RegisterPageState extends State<RegisterPage> {
       body: BlocListener<AuthBlocCubit, AuthBlocState>(
         listener: (contet, state) {
           if (state is AuthBlocErrorState) {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.error),
-              ),
-            );
+            FunctionHelper.snackBar(context, state.error);
           }
-          if (state is AuthBlocLoadingState) {
-            showDialog(
-              context: context,
-              builder: (context) => Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+          if (state is AuthBlocAuthenticatedState) {
+            Navigator.pop(context);
           }
         },
         child: SafeArea(
@@ -65,10 +56,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     height: 16,
                   ),
-                  CustomButton(
-                    text: "Register",
-                    onPressed: handleRegister,
-                  ),
+                  BlocBuilder<AuthBlocCubit, AuthBlocState>(
+                      builder: (context, state) {
+                    if (state is AuthBlocLoadingState) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return CustomButton(
+                      text: "Register",
+                      onPressed: handleRegister,
+                    );
+                  }),
                   SizedBox(
                     height: 16,
                   ),
@@ -82,7 +79,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void handleRegister() async {
-    // print({handleRegister, "called"});
     final authRead = context.read<AuthBlocCubit>();
     final _email = emailController.value;
     final _password = passwordController.value;

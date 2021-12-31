@@ -11,37 +11,51 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
   AuthBlocCubit() : super(AuthBlocInitialState());
 
   void fetchHistoryLogin() async {
-    emit(AuthBlocInitialState());
+    emit(AuthBlocLoadingState());
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? isLoggedIn = sharedPreferences.getBool(SharedPrefKey.isLoggedIn);
     if (isLoggedIn == null) {
-      emit(AuthBlocLoginState());
+      emit(AuthBlocUnauthenticatedState());
     } else {
       if (isLoggedIn) {
-        emit(AuthBlocLoggedInState());
+        emit(AuthBlocAuthenticatedState());
       } else {
-        emit(AuthBlocLoginState());
+        emit(AuthBlocUnauthenticatedState());
       }
     }
   }
 
   void loginUser(User user) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     emit(AuthBlocLoadingState());
-    await sharedPreferences.setBool(SharedPrefKey.isLoggedIn, true);
-    String data = user.toJson().toString();
-    sharedPreferences.setString("user_value", data);
-    emit(AuthBlocLoggedInState());
+    final result = await userProvider.getUser(user.email);
+    if (result != null) {
+      await isLoginSaveLocal();
+      emit(AuthBlocAuthenticatedState());
+    } else {
+      emit(AuthBlocErrorState("User dont exist"));
+    }
+  }
+
+  void logoutUser() async {
+    emit(AuthBlocLoadingState());
+    await isLoginSaveLocal(isLogin: false);
+    emit(AuthBlocUnauthenticatedState());
   }
 
   void registerUser(User user) async {
     emit(AuthBlocLoadingState());
     try {
       await userProvider.insert(user);
-      emit(AuthBlocLoadedState(user));
+      await isLoginSaveLocal();
+      emit(AuthBlocAuthenticatedState());
     } catch (e) {
       print({AuthBlocCubit, "error", e.toString()});
       emit(AuthBlocErrorState(e.toString()));
     }
+  }
+
+  isLoginSaveLocal({bool isLogin = true}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool(SharedPrefKey.isLoggedIn, isLogin);
   }
 }

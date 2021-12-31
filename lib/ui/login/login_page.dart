@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:majootestcase/bloc/auth_bloc/auth_bloc_cubit.dart';
-import 'package:majootestcase/bloc/home_bloc/home_bloc_cubit.dart';
 import 'package:majootestcase/common/widget/custom_button.dart';
 import 'package:majootestcase/common/widget/text_form_field.dart';
 import 'package:majootestcase/models/user.dart';
 import 'package:majootestcase/ui/extra/input_email_view.dart';
 import 'package:majootestcase/ui/extra/input_password_view.dart';
-import 'package:majootestcase/ui/home_bloc/home_bloc_screen.dart';
 import 'package:majootestcase/ui/register/register_page.dart';
+import 'package:majootestcase/utils/function_helper.dart';
 import 'package:majootestcase/utils/navigator_helper.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,16 +30,8 @@ class _LoginState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<AuthBlocCubit, AuthBlocState>(
         listener: (context, state) {
-          if (state is AuthBlocLoggedInState) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BlocProvider(
-                  create: (context) => HomeBlocCubit()..fetchingData(),
-                  child: HomeBlocScreen(),
-                ),
-              ),
-            );
+          if (state is AuthBlocErrorState) {
+            FunctionHelper.snackBar(context, state.error);
           }
         },
         child: SingleChildScrollView(
@@ -71,23 +62,17 @@ class _LoginState extends State<LoginPage> {
               SizedBox(
                 height: 50,
               ),
-              CustomButton(
-                text: 'Login',
-                onPressed: handleLogin,
-                height: 100,
-              ),
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       // final _email = "h1@email.com";
-              //       // await userProvider.insert(
-              //       //     User(email: _email, username: "123", password: "123"));
-              //       // final _user = await userProvider.getUser(_email);
-              //       // print(_user?.username.toString());
-
-              //       // final affectedRow = await userProvider.delete(_email);
-              //       // print({affectedRow});
-              //     },
-              //     child: Text("Database")),
+              BlocBuilder<AuthBlocCubit, AuthBlocState>(
+                  builder: (context, state) {
+                if (state is AuthBlocLoadingState) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return CustomButton(
+                  text: 'Login',
+                  onPressed: handleLogin,
+                  height: 100,
+                );
+              }),
               SizedBox(
                 height: 50,
               ),

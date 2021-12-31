@@ -1,11 +1,10 @@
 import 'package:majootestcase/services/sqflite_service.dart';
-import 'package:majootestcase/ui/home_bloc/home_bloc_screen.dart';
+import 'package:majootestcase/ui/film/film_page.dart';
 import 'package:majootestcase/ui/login/login_page.dart';
-import 'package:flutter/foundation.dart';
+import 'package:majootestcase/utils/navigator_helper.dart';
 import 'bloc/auth_bloc/auth_bloc_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/home_bloc/home_bloc_cubit.dart';
 import 'package:flutter/material.dart';
 
 late UserProvider userProvider;
@@ -41,17 +40,17 @@ class MyHomePageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBlocCubit, AuthBlocState>(
       builder: (context, state) {
-        if (state is AuthBlocLoginState) {
+        if (state is AuthBlocUnauthenticatedState) {
           return LoginPage();
-        } else if (state is AuthBlocLoggedInState) {
-          return BlocProvider(
-            create: (context) => HomeBlocCubit()..fetchingData(),
-            child: HomeBlocScreen(),
-          );
         }
-
-        return Center(
-            child: Text(kDebugMode ? "state not implemented $state" : ""));
+        if (state is AuthBlocAuthenticatedState) {
+          return FilmPage();
+        }
+        return Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }

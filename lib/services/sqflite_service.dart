@@ -24,13 +24,13 @@ create table ${SqfliteKey.tableUser} (
   }
 
   Future<User> insert(User user) async {
-    final _user = await getUser(user.email ?? "");
+    final _user = await getUser(user.email);
     if (_user != null) throw "Email already registered";
     await db.insert(SqfliteKey.tableUser, user.toMap());
     return user;
   }
 
-  Future<User?> getUser(String email) async {
+  Future<User?> getUser(String? email) async {
     List<Map<String, dynamic>> maps = await db.query(SqfliteKey.tableUser,
         columns: [
           SqfliteKey.columnEmail,

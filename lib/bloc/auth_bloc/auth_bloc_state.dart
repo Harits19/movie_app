@@ -11,9 +11,9 @@ class AuthBlocInitialState extends AuthBlocState {}
 
 class AuthBlocLoadingState extends AuthBlocState {}
 
-class AuthBlocLoggedInState extends AuthBlocState {}
+class AuthBlocAuthenticatedState extends AuthBlocState {}
 
-class AuthBlocLoginState extends AuthBlocState {}
+class AuthBlocUnauthenticatedState extends AuthBlocState {}
 
 class AuthBlocSuccesState extends AuthBlocState {}
 
