@@ -5,7 +5,6 @@ import 'package:majootestcase/ui/login/login_page.dart';
 import 'package:majootestcase/utils/function_helper.dart';
 import 'bloc/auth_bloc/auth_bloc_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter/material.dart';
 
 late UserProvider userProvider;

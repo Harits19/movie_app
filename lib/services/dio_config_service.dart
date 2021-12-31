@@ -22,8 +22,3 @@ Dio createInstance() {
       maxWidth: 90));
   return dioInstance;
 }
-
-Future<Dio> dio() async {
-  final dioInstance = createInstance();
-  return dioInstance;
-}

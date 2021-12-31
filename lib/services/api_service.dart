@@ -13,7 +13,7 @@ class ApiServices {
   }) async {
     print({"called", ApiServices, getMovieList});
     try {
-      final dio = await (dioConfig.dio());
+      final dio = dioConfig.createInstance();
       Response<String> response = await dio.request(
         "/auto-complete",
         queryParameters: {
