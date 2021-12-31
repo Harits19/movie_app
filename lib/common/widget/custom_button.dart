@@ -44,14 +44,12 @@ class CustomButton extends StatelessWidget {
       );
 
   Widget _label(BuildContext context) {
-    return Expanded(
-      child: Text(
-        text ?? "",
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.center,
-        style: TextStyle(color: _color(context)),
-      ),
+    return Text(
+      text ?? "",
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
+      style: TextStyle(color: _color(context)),
     );
   }
 
@@ -72,7 +70,6 @@ class CustomButton extends StatelessWidget {
     return ButtonTheme(
       height: height,
       buttonColor: color,
-      minWidth: double.infinity,
       child: isOutline
           ? OutlinedButton.icon(
               style: OutlinedButton.styleFrom(

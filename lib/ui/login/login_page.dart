@@ -5,7 +5,11 @@ import 'package:majootestcase/bloc/home_bloc/home_bloc_cubit.dart';
 import 'package:majootestcase/common/widget/custom_button.dart';
 import 'package:majootestcase/common/widget/text_form_field.dart';
 import 'package:majootestcase/models/user.dart';
+import 'package:majootestcase/ui/extra/input_email_view.dart';
+import 'package:majootestcase/ui/extra/input_password_view.dart';
 import 'package:majootestcase/ui/home_bloc/home_bloc_screen.dart';
+import 'package:majootestcase/ui/register/register_page.dart';
+import 'package:majootestcase/utils/navigator_helper.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,8 +20,6 @@ class _LoginState extends State<LoginPage> {
   final _emailController = TextController();
   final _passwordController = TextController();
   GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-
-  bool _isObscurePassword = true;
 
   @override
   void initState() {
@@ -42,45 +44,43 @@ class _LoginState extends State<LoginPage> {
           }
         },
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(top: 75, left: 25, bottom: 25, right: 25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Selamat Datang',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    // color: colorBlue,
-                  ),
+          padding: EdgeInsets.only(top: 75, left: 25, bottom: 25, right: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                'Selamat Datang',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  // color: colorBlue,
                 ),
-                Text(
-                  'Silahkan login terlebih dahulu',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                  ),
+              ),
+              Text(
+                'Silahkan login terlebih dahulu',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
                 ),
-                SizedBox(
-                  height: 9,
-                ),
-                _form(),
-                SizedBox(
-                  height: 50,
-                ),
-                CustomButton(
-                  text: 'Login',
-                  onPressed: handleLogin,
-                  height: 100,
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                _register(),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 9,
+              ),
+              _form(),
+              SizedBox(
+                height: 50,
+              ),
+              CustomButton(
+                text: 'Login',
+                onPressed: handleLogin,
+                height: 100,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              _register(),
+            ],
           ),
         ),
       ),
@@ -92,36 +92,11 @@ class _LoginState extends State<LoginPage> {
       key: formKey,
       child: Column(
         children: [
-          CustomTextFormField(
-            context: context,
+          InputEmailView(
             controller: _emailController,
-            isEmail: true,
-            hint: 'Example@123.com',
-            label: 'Email',
-            validator: (val) {
-              final pattern = new RegExp(r'([\d\w]{1,}@[\w\d]{1,}\.[\w]{1,})');
-              if (val != null)
-                return pattern.hasMatch(val) ? null : 'email is invalid';
-            },
           ),
-          CustomTextFormField(
-            context: context,
-            label: 'Password',
-            hint: 'password',
+          InputPasswordView(
             controller: _passwordController,
-            isObscureText: _isObscurePassword,
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isObscurePassword
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isObscurePassword = !_isObscurePassword;
-                });
-              },
-            ),
           ),
         ],
       ),
@@ -132,7 +107,9 @@ class _LoginState extends State<LoginPage> {
     return Align(
       alignment: Alignment.center,
       child: TextButton(
-        onPressed: () async {},
+        onPressed: () async {
+          NavigatorHelper.push(context, RegisterPage());
+        },
         child: RichText(
           text: TextSpan(
               text: 'Belum punya akun? ',

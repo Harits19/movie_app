@@ -9,7 +9,6 @@ class CustomTextFormField extends CustomFormField<String?> {
     String? title,
     String? hint,
     TextController? controller,
-    BuildContext? context,
     bool enabled = true,
     bool mandatory = true,
     bool isObscureText = false,
