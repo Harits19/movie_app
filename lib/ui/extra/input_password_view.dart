@@ -3,7 +3,7 @@ import 'package:majootestcase/common/widget/text_form_field.dart';
 
 class InputPasswordView extends StatefulWidget {
   InputPasswordView({Key? key, this.controller}) : super(key: key);
-  TextController? controller;
+  final TextController? controller;
 
   @override
   State<InputPasswordView> createState() => _InputPasswordViewState();

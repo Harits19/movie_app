@@ -6,7 +6,6 @@ import 'package:majootestcase/models/user.dart';
 import 'package:majootestcase/ui/extra/input_email_view.dart';
 import 'package:majootestcase/ui/extra/input_password_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:majootestcase/utils/function_helper.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key}) : super(key: key);

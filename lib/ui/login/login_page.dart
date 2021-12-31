@@ -7,7 +7,6 @@ import 'package:majootestcase/models/user.dart';
 import 'package:majootestcase/ui/extra/input_email_view.dart';
 import 'package:majootestcase/ui/extra/input_password_view.dart';
 import 'package:majootestcase/ui/register/register_page.dart';
-import 'package:majootestcase/utils/function_helper.dart';
 import 'package:majootestcase/utils/navigator_helper.dart';
 
 class LoginPage extends StatefulWidget {
