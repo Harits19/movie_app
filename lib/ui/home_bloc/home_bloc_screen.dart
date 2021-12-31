@@ -7,7 +7,7 @@ import '../extra/loading.dart';
 import '../extra/error_screen.dart';
 
 class HomeBlocScreen extends StatelessWidget {
-  const HomeBlocScreen({Key key}) : super(key: key);
+  const HomeBlocScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

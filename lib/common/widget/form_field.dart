@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -6,27 +5,27 @@ const InputDecoration defaultInputDecoration = InputDecoration();
 const Icon defaultPickerIcon = Icon(Icons.arrow_drop_down);
 
 abstract class CustomFormField<T> extends FormField<T> {
-  final CustomFormFieldController<T> controller;
+  final CustomFormFieldController<T>? controller;
 
   CustomFormField({
     this.controller,
-    T initialValue,
-    FormFieldBuilder<T> builder,
-     FormFieldValidator<T> validator,
-    FormFieldSetter<T> onSaved,
+    T? initialValue,
+    required FormFieldBuilder<T> builder,
+    FormFieldValidator<T>? validator,
+    FormFieldSetter<T>? onSaved,
     bool enabled = true,
     bool autoValidate = false,
-    Key key,
+    Key? key,
   }) : super(
-      initialValue: controller != null ? controller.value : initialValue,
-      builder: builder,
-      validator: validator,
-      onSaved: onSaved,
-      autovalidateMode: autoValidate
-          ? AutovalidateMode.always
-          : AutovalidateMode.disabled,
-      enabled: enabled,
-      key: key);
+            initialValue: controller != null ? controller.value : initialValue,
+            builder: builder,
+            validator: validator,
+            onSaved: onSaved,
+            autovalidateMode: autoValidate
+                ? AutovalidateMode.always
+                : AutovalidateMode.disabled,
+            enabled: enabled,
+            key: key);
 
   @override
   FormFieldState<T> createState() => CustomFormFieldState<T>();
@@ -54,7 +53,7 @@ abstract class CustomFormFieldController<T> extends ChangeNotifier
     });
   }
 
-  String fromValue(T value);
+  String? fromValue(T value);
 
   T toValue(String text);
 
@@ -86,9 +85,9 @@ abstract class CustomFormFieldController<T> extends ChangeNotifier
 }
 
 class CustomFormFieldState<T> extends FormFieldState<T> {
-  VoidCallback _listener;
+  late VoidCallback _listener;
 
-  CustomFormFieldController<T> get _controller => widget.controller;
+  CustomFormFieldController<T?>? get _controller => widget.controller;
 
   @override
   CustomFormField<T> get widget => super.widget as CustomFormField<T>;
@@ -128,7 +127,7 @@ class CustomFormFieldState<T> extends FormFieldState<T> {
   }
 
   @override
-  void didChange(T value) {
+  void didChange(T? value) {
     if (_controller == null || _controller?.value != value) {
       _controller?.value = value;
     }

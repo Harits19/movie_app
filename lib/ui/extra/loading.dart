@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
   final double height;
-  final Color color;
+  final Color? color;
 
-  const LoadingIndicator({Key key, this.height =10, this.color}) : super(key: key);
+  const LoadingIndicator({Key? key, this.height =10, this.color}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {
   final String message;
-  final Function() retry;
-  final Color textColor;
+  final Function()? retry;
+  final Color? textColor;
   final double fontSize;
   final double gap;
-  final Widget retryButton;
+  final Widget? retryButton;
 
   const ErrorScreen(
-      {Key key,
+      {Key? key,
       this.gap = 10,
       this.retryButton,
       this.message="",
@@ -40,7 +40,7 @@ class ErrorScreen extends StatelessWidget {
                           IconButton(
                             onPressed: () {
                               if(retry!=null)
-                                retry();
+                                retry!();
                             },
                             icon: Icon(Icons.refresh_sharp),
                           ),

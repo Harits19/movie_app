@@ -12,20 +12,18 @@ class ErrorHelper {
   }
 
   static extractApiError(DioError error) {
-    String message = "Something went wrong";
+    String? message = "Something went wrong";
     print(
         'error === ${error.response}  ==== ${error.response != null ? error.response?.data : 'noresponse'} ==== ${error.response != null ? error.response?.extra : 'no response'}=== ${error.message}');
-    if (error is DioError) {
-      if (error.error is SocketException ||
-          error.type == DioErrorType.connectTimeout) {
-        message =
-            "Cannot connect to server. Make sure you have proper internet connection";
-      } else if (error.response != null &&
-          error.response?.data['message'] != null) {
-        message = error.response?.data['message'];
-      } else {
-        message = error.message;
-      }
+    if (error.error is SocketException ||
+        error.type == DioErrorType.connectTimeout) {
+      message =
+          "Cannot connect to server. Make sure you have proper internet connection";
+    } else if (error.response != null &&
+        error.response?.data['message'] != null) {
+      message = error.response?.data['message'];
+    } else {
+      message = error.message;
     }
     return message;
   }
