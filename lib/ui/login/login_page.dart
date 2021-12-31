@@ -28,57 +28,50 @@ class _LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<AuthBlocCubit, AuthBlocState>(
-        listener: (context, state) {
-          if (state is AuthBlocErrorState) {
-            FunctionHelper.snackBar(context, state.error);
-          }
-        },
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(top: 75, left: 25, bottom: 25, right: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
-                'Selamat Datang',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  // color: colorBlue,
-                ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 75, left: 25, bottom: 25, right: 25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              'Selamat Datang',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                // color: colorBlue,
               ),
-              Text(
-                'Silahkan login terlebih dahulu',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                ),
+            ),
+            Text(
+              'Silahkan login terlebih dahulu',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
               ),
-              SizedBox(
-                height: 9,
-              ),
-              _form(),
-              SizedBox(
-                height: 50,
-              ),
-              BlocBuilder<AuthBlocCubit, AuthBlocState>(
-                  builder: (context, state) {
-                if (state is AuthBlocLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return CustomButton(
-                  text: 'Login',
-                  onPressed: handleLogin,
-                  height: 100,
-                );
-              }),
-              SizedBox(
-                height: 50,
-              ),
-              _register(),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 9,
+            ),
+            _form(),
+            SizedBox(
+              height: 50,
+            ),
+            BlocBuilder<AuthBlocCubit, AuthBlocState>(
+                builder: (context, state) {
+              if (state is AuthBlocLoadingState) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return CustomButton(
+                text: 'Login',
+                onPressed: handleLogin,
+                height: 100,
+              );
+            }),
+            SizedBox(
+              height: 50,
+            ),
+            _register(),
+          ],
         ),
       ),
     );

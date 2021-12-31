@@ -1,7 +1,8 @@
+import 'package:majootestcase/bloc/movie_bloc/movie_bloc_cubit.dart';
 import 'package:majootestcase/services/sqflite_service.dart';
-import 'package:majootestcase/ui/film/film_page.dart';
+import 'package:majootestcase/ui/movie/movie_page.dart';
 import 'package:majootestcase/ui/login/login_page.dart';
-import 'package:majootestcase/utils/navigator_helper.dart';
+import 'package:majootestcase/utils/function_helper.dart';
 import 'bloc/auth_bloc/auth_bloc_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,20 +39,34 @@ class MyHomePageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBlocCubit, AuthBlocState>(
-      builder: (context, state) {
-        if (state is AuthBlocUnauthenticatedState) {
-          return LoginPage();
+    return BlocListener<AuthBlocCubit, AuthBlocState>(
+      listener: (context, state) {
+        if (state is AuthBlocErrorState) {
+          FunctionHelper.snackBar(context, state.error);
         }
         if (state is AuthBlocAuthenticatedState) {
-          return FilmPage();
+          FunctionHelper.snackBar(context, state.text);
         }
-        return Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
       },
+      child: BlocBuilder<AuthBlocCubit, AuthBlocState>(
+        builder: (context, state) {
+          if (state is AuthBlocUnauthenticatedState) {
+            return LoginPage();
+          }
+          if (state is AuthBlocAuthenticatedState) {
+            return BlocProvider<MovieBlocCubit>(
+              create: (_) => MovieBlocCubit()..getListMovie(),
+              lazy: false,
+              child: MoviePage(),
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

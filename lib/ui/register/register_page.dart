@@ -26,9 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: BlocListener<AuthBlocCubit, AuthBlocState>(
         listener: (contet, state) {
-          if (state is AuthBlocErrorState) {
-            FunctionHelper.snackBar(context, state.error);
-          }
           if (state is AuthBlocAuthenticatedState) {
             Navigator.pop(context);
           }

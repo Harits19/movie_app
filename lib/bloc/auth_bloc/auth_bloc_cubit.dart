@@ -18,7 +18,7 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
       emit(AuthBlocUnauthenticatedState());
     } else {
       if (isLoggedIn) {
-        emit(AuthBlocAuthenticatedState());
+        emit(AuthBlocAuthenticatedState("Login Berhasil"));
       } else {
         emit(AuthBlocUnauthenticatedState());
       }
@@ -29,10 +29,16 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
     emit(AuthBlocLoadingState());
     final result = await userProvider.getUser(user.email);
     if (result != null) {
-      await isLoginSaveLocal();
-      emit(AuthBlocAuthenticatedState());
+      if (result.password == user.password) {
+        await isLoginSaveLocal();
+        emit(AuthBlocAuthenticatedState("Login Berhasil"));
+      } else {
+        emit(AuthBlocErrorState("Login gagal, periksa kembali inputan anda"));
+        emit(AuthBlocUnauthenticatedState());
+      }
     } else {
-      emit(AuthBlocErrorState("User dont exist"));
+      emit(AuthBlocErrorState("Email tidak terdaftar"));
+      emit(AuthBlocUnauthenticatedState());
     }
   }
 
@@ -47,10 +53,11 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
     try {
       await userProvider.insert(user);
       await isLoginSaveLocal();
-      emit(AuthBlocAuthenticatedState());
+      emit(AuthBlocAuthenticatedState("Register Berhasil"));
     } catch (e) {
       print({AuthBlocCubit, "error", e.toString()});
       emit(AuthBlocErrorState(e.toString()));
+      emit(AuthBlocUnauthenticatedState());
     }
   }
 

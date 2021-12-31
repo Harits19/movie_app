@@ -11,20 +11,15 @@ class AuthBlocInitialState extends AuthBlocState {}
 
 class AuthBlocLoadingState extends AuthBlocState {}
 
-class AuthBlocAuthenticatedState extends AuthBlocState {}
-
-class AuthBlocUnauthenticatedState extends AuthBlocState {}
-
-class AuthBlocSuccesState extends AuthBlocState {}
-
-class AuthBlocLoadedState extends AuthBlocState {
-  final User data;
-
-  AuthBlocLoadedState(this.data);
+class AuthBlocAuthenticatedState extends AuthBlocState {
+  final String text;
+  AuthBlocAuthenticatedState(this.text);
 
   @override
-  List<Object> get props => [data];
+  List<Object> get props => [text];
 }
+
+class AuthBlocUnauthenticatedState extends AuthBlocState {}
 
 class AuthBlocErrorState extends AuthBlocState {
   final String error;
