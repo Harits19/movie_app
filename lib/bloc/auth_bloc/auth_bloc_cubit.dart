@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:majootestcase/main.dart';
 import 'package:majootestcase/models/user.dart';
 import 'package:majootestcase/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,5 +32,16 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
     String data = user.toJson().toString();
     sharedPreferences.setString("user_value", data);
     emit(AuthBlocLoggedInState());
+  }
+
+  void registerUser(User user) async {
+    emit(AuthBlocLoadingState());
+    try {
+      await userProvider.insert(user);
+      emit(AuthBlocLoadedState(user));
+    } catch (e) {
+      print({AuthBlocCubit, "error", e.toString()});
+      emit(AuthBlocErrorState(e.toString()));
+    }
   }
 }

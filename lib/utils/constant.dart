@@ -18,3 +18,10 @@ class ScreenUtilConstants {
 class SharedPrefKey {
   static const isLoggedIn = "is_logged_in";
 }
+
+class SqfliteKey {
+  static const tableUser = 'users';
+  static const columnEmail = 'email';
+  static const columnPassword = 'password';
+  static const columnUsername = 'username';
+}

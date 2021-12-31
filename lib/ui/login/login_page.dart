@@ -76,6 +76,18 @@ class _LoginState extends State<LoginPage> {
                 onPressed: handleLogin,
                 height: 100,
               ),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       // final _email = "h1@email.com";
+              //       // await userProvider.insert(
+              //       //     User(email: _email, username: "123", password: "123"));
+              //       // final _user = await userProvider.getUser(_email);
+              //       // print(_user?.username.toString());
+
+              //       // final affectedRow = await userProvider.delete(_email);
+              //       // print({affectedRow});
+              //     },
+              //     child: Text("Database")),
               SizedBox(
                 height: 50,
               ),
@@ -125,17 +137,17 @@ class _LoginState extends State<LoginPage> {
   }
 
   void handleLogin() async {
+    final authRead = context.read<AuthBlocCubit>();
     final String? _email = _emailController.value;
     final String? _password = _passwordController.value;
     if (formKey.currentState?.validate() == true &&
         _email != null &&
         _password != null) {
-      AuthBlocCubit authBlocCubit = AuthBlocCubit();
       User user = User(
         email: _email,
         password: _password,
       );
-      authBlocCubit.loginUser(user);
+      authRead.loginUser(user);
     }
   }
 }

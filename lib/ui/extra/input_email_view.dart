@@ -7,7 +7,7 @@ class InputEmailView extends StatelessWidget {
     this.controller,
   }) : super(key: key);
 
-  TextController? controller;
+  final TextController? controller;
 
   @override
   Widget build(BuildContext context) {

@@ -1,18 +1,31 @@
-class User{
+import 'package:majootestcase/utils/constant.dart';
+
+class User {
   String? email;
-  String? userName;
   String? password;
+  String? username;
 
-  User({this.email, this.userName, this.password});
+  User({this.email, this.password, this.username});
 
-  User.fromJson(Map<String, dynamic> json)
-      : email = json['email'],
-        password = json['password'],
-        userName = json['username'];
+  Map<String, Object?> toMap() {
+    var map = <String, Object?>{
+      SqfliteKey.columnEmail: email,
+      SqfliteKey.columnPassword: password,
+      SqfliteKey.columnUsername: username,
+    };
+
+    return map;
+  }
+
+  User.fromMap(Map<String, dynamic> map) {
+    email = map[SqfliteKey.columnEmail];
+    password = map[SqfliteKey.columnPassword];
+    username = map[SqfliteKey.columnUsername];
+  }
 
   Map<String, dynamic> toJson() => {
-    'email': email,
-    'password': password,
-    'username' : userName
-  };
+        'email': email,
+        'password': password,
+        'username': username,
+      };
 }
