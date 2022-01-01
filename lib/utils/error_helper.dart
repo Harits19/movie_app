@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class ErrorHelper {
-  static apiError(dynamic error) {
-    String? message = "Something went wrong";
+  static String apiError(dynamic error) {
+    String message = "Something went wrong";
     print(
         'error === ${error.response}  ==== ${error.response != null ? error.response?.data : 'noresponse'} ==== ${error.response != null ? error.response?.extra : 'no response'}=== ${error.message}');
     if (error is DioError) {
