@@ -47,6 +47,10 @@ class MoviePage extends StatelessWidget {
                         SizedBox(
                           height: 16,
                         ),
+                        Icon(Icons.signal_cellular_connected_no_internet_0_bar),
+                        SizedBox(
+                          height: 16,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(

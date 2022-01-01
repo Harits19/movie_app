@@ -29,25 +29,19 @@ class MovieDetailPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(movie.title ?? ""),
                   Text((movie.year ?? "").toString()),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ...(movie.listSeries ?? []).map(
-                          (e) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: MovieView(
-                              imageUrl: e.imageMovie?.imageUrl,
-                              title: e.title,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                  SizedBox(
+                    height: 16,
                   ),
+                  ...(movie.listSeries ?? []).map(
+                    (e) => MovieView(
+                      imageUrl: e.imageMovie?.imageUrl,
+                      title: e.title,
+                    ),
+                  )
                 ],
               ),
             ),

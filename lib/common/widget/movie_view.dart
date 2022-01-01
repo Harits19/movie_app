@@ -17,6 +17,7 @@ class MovieView extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
             height: 204.8,
@@ -30,7 +31,7 @@ class MovieView extends StatelessWidget {
           SizedBox(
             width: 16,
           ),
-          Text(title ?? "")
+          Flexible(child: Text(title ?? ""))
         ],
       ),
     );
