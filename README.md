@@ -1,7 +1,6 @@
 # majootestcase
 
-A new Flutter project.
-
+Aplikasi untuk mengerjakan proses rekrutmen PT. Majoo Indonesia
 ## Getting Started
 
 This project is a starting point for a Flutter application.

@@ -27,6 +27,7 @@ class MoviePage extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   )
                 : ListView(
+                    padding: EdgeInsets.all(16),
                     children: [
                       if (state is MovieBlocLoadedState)
                         ...(state.data.listMovie ?? []).map(

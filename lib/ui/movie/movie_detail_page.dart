@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majootestcase/common/styles/styles.dart';
 import 'package:majootestcase/common/widget/movie_view.dart';
 import 'package:majootestcase/models/movie_response.dart';
 
@@ -31,8 +32,14 @@ class MovieDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(movie.title ?? ""),
-                  Text((movie.year ?? "").toString()),
+                  Text(
+                    movie.title ?? "",
+                    style: KStyle.text.bold24w900,
+                  ),
+                  Text(
+                    (movie.year ?? "").toString(),
+                    style: KStyle.text.bold16w900,
+                  ),
                   SizedBox(
                     height: 16,
                   ),
